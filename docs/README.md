@@ -20,55 +20,6 @@ This is a static HTML/CSS/JavaScript version of the Payment Strategy Calculator 
 - ✅ SEO optimized with meta tags
 - ✅ Accessible form controls and navigation
 
-## GitHub Pages Deployment
-
-### Option 1: Direct Upload
-
-1. Create a new repository on GitHub
-2. Upload these files to the repository
-3. Go to Settings > Pages
-4. Select "Deploy from a branch"
-5. Choose "main" branch and "/ (root)" folder
-6. Click Save
-
-### Option 2: GitHub Desktop/Git
-
-1. Create a new repository on GitHub
-2. Clone the repository locally:
-   ```bash
-   git clone https://github.com/yourusername/payment-calculator.git
-   cd payment-calculator
-   ```
-
-3. Copy these files to the cloned repository folder
-
-4. Commit and push:
-   ```bash
-   git add .
-   git commit -m "Add payment calculator static files"
-   git push origin main
-   ```
-
-5. Enable GitHub Pages in repository settings
-
-### Option 3: GitHub CLI
-
-1. Create repository and upload:
-   ```bash
-   gh repo create payment-calculator --public
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/yourusername/payment-calculator.git
-   git push -u origin main
-   ```
-
-2. Enable GitHub Pages:
-   ```bash
-   gh api repos/:owner/:repo/pages -X POST -F source.branch=main -F source.path=/
-   ```
-
 ## Customization
 
 ### Styling
@@ -86,12 +37,6 @@ This is a static HTML/CSS/JavaScript version of the Payment Strategy Calculator 
 - Modify the financial tips in the tips section
 - Adjust default form values in the JavaScript
 
-## Browser Support
-
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Mobile browsers (iOS Safari, Android Chrome)
-- IE11+ (with polyfills if needed)
-
 ## Performance
 
 - No external dependencies except Google Fonts
@@ -106,21 +51,7 @@ This is a static HTML/CSS/JavaScript version of the Payment Strategy Calculator 
 - Accessible form labels and structure
 - Fast loading performance
 
-## Local Development
-
-To test locally:
-
-1. Open `index.html` in a web browser, or
-2. Use a local server:
-   ```bash
-   python -m http.server 8000
-   # or
-   npx serve .
-   ```
-
 ## GitHub Pages URL
 
-After deployment, your calculator will be available at:
-`https://yourusername.github.io/repository-name/`
-
-Replace `yourusername` and `repository-name` with your actual GitHub username and repository name.
+The calculator will be available at:
+`https://nsanka.github.io/tuition-strategy/`
