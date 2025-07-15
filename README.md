@@ -73,7 +73,7 @@ Available in multiple implementations:
    gunicorn app:app
    ```
 
-   The application will be available at `http://localhost:5000`
+   The application will be available at `http://localhost:5500`
 
 ## 📜 Available Scripts
 
@@ -91,7 +91,7 @@ Available in multiple implementations:
 
 1. **Create Heroku app**
    ```bash
-   heroku create your-payment-calculator-python
+   heroku create payment-calculator-python
    ```
 
 2. **Set Python buildpack**
@@ -101,7 +101,7 @@ Available in multiple implementations:
 
 3. **Create required files** (already included):
    - `Procfile`: `web: gunicorn app:app`
-   - `runtime.txt`: `python-3.11.6`
+   - `runtime.txt`: `python-3.12.7`
    - Python dependencies in `pyproject.toml`
 
 4. **Deploy to Heroku**
@@ -121,51 +121,53 @@ Available in multiple implementations:
 #### For Python Flask Version
 1. **Create Dockerfile**
    ```dockerfile
-   FROM python:3.11-slim
+   FROM python:3.12-slim
 
    WORKDIR /app
-   COPY pyproject.toml uv.lock ./
+   COPY pyproject.toml poetry.lock ./
    RUN pip install uv && uv sync --frozen
 
    COPY . .
 
    EXPOSE 5000
-   CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+   CMD ["gunicorn", "--bind", "0.0.0.0:5500", "app:app"]
    ```
 
 2. **Build and run either version**
    ```bash
-   docker build -t payment-calculator .
-   docker run -p 5000:5000 payment-calculator
+   docker build -t tuition-strategy .
+   docker run -p 5500:5500 tuition-strategy
    ```
 
 ## 🔐 Environment Variables
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `PORT` | Server port (default: 5000) | No |
+| `PORT` | Server port (default: 5500) | No |
 | `SESSION_SECRET` | Session encryption key | Production only |
 
 ## 📁 Project Structure
 
 ### Python Flask Version
 ```
-├── app.py                 # Flask application and API routes
-├── templates/             # Jinja2 HTML templates
-│   └── calculator.html    # Main calculator page
-├── static/                # Static assets
-│   ├── css/
-│   │   └── styles.css     # Application styling
-│   └── js/
-│       └── calculator.js  # Frontend JavaScript
-├── Procfile              # Heroku deployment configuration
-├── runtime.txt           # Python version specification
-└── pyproject.toml        # Python dependencies
+├── tuition_strategy           # Tuition Strategy Module
+│   └── app.py                 # Flask application and API routes
+│   └── templates/             # Jinja2 HTML templates
+│   │   └── calculator.html    # Main calculator page
+│   └── static/                # Static assets
+│   │   ├── css/
+│   │   │   └── styles.css     # Application styling
+│   │   └── js/
+│   │       └── calculator.js  # Frontend JavaScript
+├── Procfile                   # Heroku deployment configuration
+├── runtime.txt                # Python version specification
+└── pyproject.toml             # Python dependencies
+└── __init__.py                # Python version specification
 ```
 
 ### Static Website Version
 ```
-├── pages/                 # GitHub Pages deployable version
+├── docs/                 # GitHub Pages deployable version
 │   ├── index.html         # Main HTML file
 │   ├── styles.css         # Styling
 │   ├── calculator.js      # JavaScript functionality
