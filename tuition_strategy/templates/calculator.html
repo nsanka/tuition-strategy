@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Strategy Calculator - Make Smarter Financial Decisions</title>
+    <meta name="description" content="Calculate whether it's better to pay in installments or make a lump sum payment, considering opportunity costs and fees. Compare payment strategies with detailed analysis.">
+    
+    <!-- Open Graph tags for social media -->
+    <meta property="og:title" content="Payment Strategy Calculator">
+    <meta property="og:description" content="Compare installment vs lump sum payment strategies with detailed financial analysis">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="calculator-icon">🧮</div>
+                    <h1>Payment Strategy Calculator</h1>
+                </div>
+                <div class="header-right">
+                    Make smarter financial decisions
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Intro Section -->
+        <section class="intro">
+            <div class="container">
+                <h2>Compare Payment Strategies</h2>
+                <p>Calculate whether it's better to pay in installments or make a lump sum payment, considering opportunity costs and fees.</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="calculator-grid">
+                <!-- Input Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📝 Payment Details</h3>
+                    </div>
+                    <div class="card-content">
+                        <form id="calculatorForm" class="form">
+                            <div class="form-group">
+                                <label for="totalAmount">Total Amount ($)</label>
+                                <input type="number" id="totalAmount" name="totalAmount" value="15000" placeholder="Enter total amount" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="installments">Number of Installments</label>
+                                <input type="number" id="installments" name="installments" value="5" placeholder="Enter number of installments" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="onTimeFee">One-Time Fee for Installment Plan ($)</label>
+                                <input type="number" id="onTimeFee" name="onTimeFee" value="30" placeholder="Enter one-time fee for installment plan" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="returnRate">Investment Return Rate (% per year)</label>
+                                <input type="number" id="returnRate" name="returnRate" value="4" step="0.1" placeholder="Enter annual return rate" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstPaymentDate">First Payment Date</label>
+                                    <input type="date" id="firstPaymentDate" name="firstPaymentDate" value="2024-06-01" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lumpSumDate">Lump Sum Payment Date</label>
+                                    <input type="date" id="lumpSumDate" name="lumpSumDate" value="2024-08-01" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postponeMonths">Postpone Installments (months)</label>
+                                <input type="number" id="postponeMonths" name="postponeMonths" value="0" min="0" placeholder="Enter months to postpone (0 = no postponement)">
+                                <p class="form-help">Maximum postponement is limited by the lump sum payment date. If postponed, all accumulated payments are due in the first actual payment month.</p>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                🧮 Calculate Best Strategy
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📊 Calculation Results</h3>
+                    </div>
+                    <div class="card-content">
+                        <div id="resultsContent">
+                            <div class="empty-state">
+                                <div class="empty-icon">🧮</div>
+                                <p>Enter your payment details to see the comparison</p>
+                            </div>
+                        </div>
+                        <div id="loadingState" class="loading-state" style="display: none;">
+                            <div class="loading-spinner">⏳</div>
+                            <p>Calculating optimal strategy...</p>
+                        </div>
+                        <div id="errorState" class="error-state" style="display: none;">
+                            <div class="error-icon">❌</div>
+                            <p id="errorMessage">Calculation failed. Please check your inputs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Breakdown -->
+            <div id="detailsCard" class="card details-card" style="display: none;">
+                <div class="card-header">
+                    <h3>📋 Detailed Breakdown</h3>
+                </div>
+                <div class="card-content">
+                    <div class="details-grid">
+                        <!-- Payment Schedule -->
+                        <div>
+                            <h4>Installment Payment Schedule</h4>
+                            <div id="paymentSchedule" class="payment-schedule"></div>
+                        </div>
+
+                        <!-- Calculation Explanation -->
+                        <div>
+                            <h4>Calculation Explanation</h4>
+                            <div id="calculationExplanation" class="explanation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="card tips-card">
+                <div class="card-header">
+                    <h3>💡 Financial Tips</h3>
+                </div>
+                <div class="card-content">
+                    <div class="tips-grid">
+                        <div class="tip">
+                            <h4>Consider Cash Flow</h4>
+                            <p>Ensure you have sufficient emergency funds before choosing lump sum payments.</p>
+                        </div>
+                        <div class="tip">
+                            <h4>Investment Risk</h4>
+                            <p>Factor in the risk of your investment returns when making the decision.</p>
+                        </div>
+                        <div class="tip">
+                            <h4>Tax Implications</h4>
+                            <p>Consider potential tax benefits of certain payment strategies.</p>
+                        </div>
+                        <div class="tip">
+                            <h4>Inflation Impact</h4>
+                            <p>Remember that inflation can affect the real value of future payments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Payment Strategy Calculator. Built for smarter financial decisions.</p>
+                <p class="disclaimer">
+                    ℹ️ This tool provides estimates. Please consult with a financial advisor for personalized advice.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/calculator.js') }}"></script>
+</body>
+</html>
